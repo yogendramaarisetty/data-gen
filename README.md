@@ -70,7 +70,7 @@ Do you want to continue?
 
 the above list shows the number of segments loaded
 
-# In my_custom_script.py you can customize the way that you want it to be generated
+### In my_custom_script.py you can customize the way that you want it to be generated
 
  
  
