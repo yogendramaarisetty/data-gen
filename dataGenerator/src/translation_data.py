@@ -9,14 +9,15 @@ accounts_list = []
 company_list = []
 department_list = []
 costcenter_list = []
-businesscenter_list = ['plan71']
-productline_list = ['plan101']
+businesscenter_list = ['Code_185', 'Code_186','Code_187']
+productline_list = ['Code_465','Code_466','Code_467','Code_468']
 geography_list = ['code_107']  # ,plan71,plan101,Code_107,Code_341,
 icsegment_list = ['code341']
 fiscalyears_list = [2013]
-months_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+months_list = [1]
 amounts_list = [1000]
-segment_index_list = ['', accounts_list,
+segment_index_list = [ 
+                      accounts_list,
                       company_list,
                       department_list,
                       costcenter_list,
@@ -80,7 +81,7 @@ def sequence_generator(segment):
     start = integer_input("Starting Integer")
     end = integer_input("Ending Integer")
     for i in range(start, end + 1):
-        segment_list.append(str(preceding_string + i))
+        segment_list.append(f'{preceding_string}{i}')
     cprint(len(segment_list), 'red', attrs=['bold'], end="")
     print('', segment.lower() + "s read")
 
@@ -101,8 +102,9 @@ def random_number_generator(segment):
     print('', segment.lower() + "s read")
 
 
+spl1 = "~!@#$%)(*&^}{';\":{}.></?|\\"; #supported special characters
 def random_string(length):
-    return ''.join(random.choices(string.ascii_uppercase, k=length))
+    return ''.join(random.choices(string.ascii_letters+ spl1+string.digits, k=length))
 
 
 def custom_strings(segment):
@@ -124,15 +126,43 @@ def default_months():
     for i in range(1, 13):
         months_list.append(i)
 
+def file_len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+
+
+
+def csv_reader(segment):
+    cprint('Enter the file name( please make sure file exist in src/input/)', 'white', attrs=['bold'], end=": ")
+    input_file_name = input()
+    f_p = f'./input/{input_file_name}.csv'
+    if os.path.exists(f_p):
+        rec = file_len(f_p)
+        print(f'Found {rec} records in {f_p}\n Do you want to continue?')
+        m.getch()
+        cols = integer_input('Enter number of columns to map')
+        input_csv_file = open(f_p,'r')
+        for line in input_csv_file:
+            line = line.split(',')
+            for i in range(0,cols):
+                segment_index_list[i].append(line[i])
+        cprint(f'Successfully read first {cols} columns from {input_file_name}', 'white', 'on_green',end=" ")
+        # print()
+    else:
+        csv_reader(segment)
+
+
 
 def generic_segment_input(segment):
     cprint(f'\n{segment.upper()}', 'yellow', attrs=['bold'])
     cprint(f'Select Input Format for {segment}', "grey")
     option = 0
-    cprint("OPTIONS:\n [1] Text file\n [2] Generate sequence\n [3] Random numbers\n [4] Custom strings\n [5] SKIP",
+    cprint("OPTIONS:\n [1] Text file\n [2] Generate sequence\n [3] Range numbers\n [4] Custom spl strings\n [5] SKIP\n [6] CSV file(bulk)",
            'magenta')
     cprint('select SKIP if you have initialized the list', 'grey')
-    option = chooseOption(5)
+    option = chooseOption(6)
     if option == 1:
         file_reader(segment)
     elif option == 2:
@@ -142,9 +172,13 @@ def generic_segment_input(segment):
     elif option == 4:
         custom_strings(segment)
     elif option == 5:
-        cprint(f'Skipped {segment}.', 'white',
+        cprint(f'Default values for {segment}. found {len(segment_list_mapper[segment])}', 'white',
                'on_green')
-    cprint(f'Successfully read the {segment} data', 'white', 'on_green')
+    elif option == 6:
+        csv_reader(segment)
+
+    if option != 6:
+        cprint(f'Successfully read the {segment} data', 'white', 'on_green')
 
 
 def custom_trans_data():

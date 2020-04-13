@@ -7,15 +7,15 @@ def custom_file(segment_mapper):
     comp = segment_mapper['company']
     dep = segment_mapper['department']
     cs = segment_mapper['costcenter']
-    rec = 1
-    cprint(f'Total generated records are{rec}.\nDo you want to continue?')
+    rec = len(acc)*len(segment_mapper['businesscenter'])*len(segment_mapper['productline'])*len(segment_mapper['geography'])*len(segment_mapper['icsegment'])
+    cprint(f'Total generated records are {rec}.\nDo you want to continue?')
     msv.getch()
     cprint('Enter the Result file name to generate:', 'white', attrs=['bold'], end=" ")
     file_name = input()
     cwd = os.getcwd()
     output_file = open(os.path.join(cwd, f'output/{file_name}.csv'), 'a+')
     cprint('Please wait! It may take some time...', 'magenta', attrs=['bold'])
-    for i in range(0,30454):
+    for i in range(0,len(acc)):
         for bc in segment_mapper['businesscenter']:
             for pl in segment_mapper['productline']:
                 for g in segment_mapper['geography']:
