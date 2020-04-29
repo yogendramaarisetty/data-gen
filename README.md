@@ -1,12 +1,14 @@
 # Data-gen
-test data generator
+TEST DATA GENERATOR
 
 This a console application
 
 ## Initial Steps
 
-1. Install python3.7
-2. go to ./dataGenerator/src and run the following command
+1. Install python3.7 https://www.python.org/ftp/python/3.7.4/python-3.7.4-amd64.exe
+2. Clone this repository 
+  ```git clone https://github.com/yogendramaarisetty/data-gen.git```
+3. go to ./dataGenerator/src and run the following command
 
   ```pip install -r requirements.txt```
   
